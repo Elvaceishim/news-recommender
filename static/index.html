@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Recommender</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📰 News Recommender</h1>
+            <p class="subtitle">Personalized news, powered by AI</p>
+        </header>
+
+        <main>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading recommendations...</p>
+            </div>
+
+            <div id="error" class="error hidden">
+                <p>⚠️ Failed to load articles. Please try again.</p>
+                <button onclick="loadArticles()">Retry</button>
+            </div>
+
+            <div id="articles" class="articles-grid"></div>
+        </main>
+
+        <footer>
+            <p>Click on articles to improve your recommendations</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
