@@ -20,8 +20,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, nullable=True) # Optional for now
-    user_embedding = mapped_column(Vector(384))
+    email = Column(String, unique=True, index=True, nullable=False)
+    full_name = Column(String, nullable=True)
+    hashed_password = Column(String, nullable=False)
+    user_embedding = mapped_column(Vector(384), nullable=True)
 
 class Interaction(Base):
     __tablename__ = "interactions"

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>📰 News Recommender</h1>
+            <div class="header-top">
+                <h1>📰 News Recommender</h1>
+                <div id="user-profile" class="user-profile">
+                    <button id="login-btn" class="auth-btn" onclick="showAuthModal('login')">Login</button>
+                    <button id="signup-btn" class="auth-btn signup" onclick="showAuthModal('signup')">Sign Up</button>
+                    <div id="user-info" class="user-info hidden">
+                        <span id="username-display"></span>
+                        <button class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
             <p class="subtitle">Personalized news, powered by AI</p>
         </header>
 
@@ -35,6 +47,53 @@
         </footer>
     </div>
 
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideAuthModal()">&times;</span>
+            <div id="login-form-container">
+                <h2>Login</h2>
+                <form id="login-form" onsubmit="handleAuthSubmit(event, 'login')">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required placeholder="••••••••">
+                    </div>
+                    <div id="login-error" class="auth-error hidden"></div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="showAuthModal('signup')">Sign up</a>
+                </p>
+            </div>
+
+            <div id="signup-form-container" class="hidden">
+                <h2>Create Account</h2>
+                <form id="signup-form" onsubmit="handleAuthSubmit(event, 'signup')">
+                    <div class="form-group">
+                        <label for="signup-fullname">Full Name</label>
+                        <input type="text" id="signup-fullname" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required placeholder="••••••••">
+                    </div>
+                    <div id="signup-error" class="auth-error hidden"></div>
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+                <p class="auth-switch">Already have an account? <a href="#" onclick="showAuthModal('login')">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
     <script src="/static/app.js"></script>
 </body>
+
 </html>

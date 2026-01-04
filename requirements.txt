@@ -13,6 +13,8 @@ feedparser
 psycopg2-binary
 requests
 python-dotenv
-nltk
+
 gunicorn
 numpy<2.0.0
+pytest
+httpx

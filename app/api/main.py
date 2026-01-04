@@ -1,13 +1,22 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from app.api.routes import recommend
+from app.api.routes import recommend, auth
 from app.utils.logger import setup_logger
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 logger = setup_logger("api")
 
 app = FastAPI(title="News Recommender API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Get the project root directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -18,6 +27,7 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # Include API routes
 app.include_router(recommend.router)
+app.include_router(auth.router)
 
 @app.get("/")
 def serve_frontend():
