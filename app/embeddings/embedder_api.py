@@ -10,8 +10,8 @@ from app.utils.config import settings
 
 logger = setup_logger("embedder_api")
 
-# HuggingFace Inference API endpoint for the same model
-HF_API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+# HuggingFace Inference API endpoint (new router endpoint)
+HF_API_URL = "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2"
 
 
 class EmbedderAPI:
