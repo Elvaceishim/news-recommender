@@ -16,9 +16,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PyTorch CPU-only first (to save massive space)
-RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
-
 # Install python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

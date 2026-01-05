@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.ingestion.fetch_feeds import fetch_all_feeds
-from app.embeddings.embedder import embedder
+from app.embeddings.embedder_api import embedder  # Use API-based embedder
 from app.storage.models import Article
 from app.utils.logger import setup_logger
 from app.storage.db import SessionLocal

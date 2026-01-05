@@ -6,6 +6,9 @@ class Settings(BaseSettings):
     SUPABASE_KEY: str
     LOG_LEVEL: str = "INFO"
 
+    # HuggingFace API token (for embeddings - get from huggingface.co/settings/tokens)
+    HF_API_TOKEN: str | None = None
+
     # Cron ingestion secret (for external cron services)
     CRON_SECRET: str | None = None
 
