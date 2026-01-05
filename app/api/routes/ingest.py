@@ -1,10 +1,9 @@
 """
 Ingestion trigger endpoint for external cron services.
 Protected by a secret token to prevent unauthorized access.
-Uses lightweight ingestion (no embeddings) for memory-constrained environments.
 """
 from fastapi import APIRouter, HTTPException, Header
-from app.ingestion.service_lite import ingest_feeds_lite
+from app.ingestion.service import ingest_feeds
 from app.utils.config import settings
 from app.utils.logger import setup_logger
 
@@ -39,8 +38,8 @@ def trigger_ingestion(x_cron_secret: str = Header(None)):
     
     logger.info("Ingestion triggered via API")
     try:
-        result = ingest_feeds_lite(FEEDS)
-        return {"status": "success", "message": "Ingestion completed", "details": result}
+        ingest_feeds(FEEDS)
+        return {"status": "success", "message": "Ingestion completed"}
     except Exception as e:
         logger.error(f"Ingestion failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
