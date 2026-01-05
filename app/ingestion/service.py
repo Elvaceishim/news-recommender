@@ -43,21 +43,31 @@ def ingest_feeds(feed_urls: list[str]):
             logger.error(f"Embedding generation failed: got {len(embeddings) if embeddings else 0} embeddings for {len(new_articles)} articles")
             raise Exception("Failed to generate embeddings - check HF_API_TOKEN")
 
-        # 4. Save to DB
-        db_articles = []
-        for i, article_data in enumerate(new_articles):
-            db_articles.append(Article(
-                title=article_data['title'],
-                content=article_data['content'],
-                link=article_data['link'],
-                source=article_data['source'],
-                published_date=article_data['published_date'],
-                embedding=embeddings[i]
-            ))
+        # 4. Save to DB - insert one by one to handle duplicates gracefully
+        saved_count = 0
+        skipped_count = 0
         
-        db.add_all(db_articles)
-        db.commit()
-        logger.info(f"Successfully saved {len(db_articles)} articles with embeddings.")
+        for i, article_data in enumerate(new_articles):
+            try:
+                article = Article(
+                    title=article_data['title'],
+                    content=article_data['content'],
+                    link=article_data['link'],
+                    source=article_data['source'],
+                    published_date=article_data['published_date'],
+                    embedding=embeddings[i]
+                )
+                db.add(article)
+                db.commit()
+                saved_count += 1
+            except Exception as e:
+                db.rollback()
+                if "duplicate key" in str(e).lower() or "unique" in str(e).lower():
+                    skipped_count += 1
+                else:
+                    logger.error(f"Error saving article: {e}")
+        
+        logger.info(f"Successfully saved {saved_count} articles with embeddings. Skipped {skipped_count} duplicates.")
 
     except Exception as e:
         logger.error(f"Ingestion failed: {e}")
