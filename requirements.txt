@@ -19,3 +19,5 @@ numpy<2.0.0
 pytest
 httpx
 email-validator
+python-jose[cryptography]
+bcrypt
