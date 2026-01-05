@@ -62,16 +62,16 @@ A production-grade personalized news recommender that fetches articles from RSS 
 
 ```bash
 # Database (Supabase)
-DATABASE_URL=postgresql://user:password@db.project.supabase.co:5432/postgres
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_KEY=your-anon-key
+DATABASE_URL
+SUPABASE_URL
+SUPABASE_KEY
 
 # HuggingFace (for embeddings)
-HF_API_TOKEN=hf_your_token_here
+HF_API_TOKEN
 
 # Security
-JWT_SECRET=your-jwt-secret
-CRON_SECRET=your-cron-secret  # Protects the /ingest endpoint
+JWT_SECRET
+CRON_SECRET
 ```
 
 ## API Endpoints
@@ -166,6 +166,4 @@ user_embedding = weighted_average(article_embeddings, weights)
 3. **Recency Boost**: Recent articles get score multiplier
 4. **Trending Injection**: Top trending articles added regardless of profile
 
-## License
 
-MIT
