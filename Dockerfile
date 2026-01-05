@@ -29,5 +29,5 @@ COPY . .
 # Expose port
 EXPOSE $PORT
 
-# Run the application using shell form to expand $PORT
-CMD gunicorn app.api.main:app -k uvicorn.workers.UvicornWorker -w 4 --bind 0.0.0.0:$PORT
+# Run the application - use 1 worker to fit in 512MB free tier
+CMD gunicorn app.api.main:app -k uvicorn.workers.UvicornWorker -w 1 --bind 0.0.0.0:$PORT
