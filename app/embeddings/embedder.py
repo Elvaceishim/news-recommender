@@ -6,8 +6,16 @@ logger = setup_logger("embedder")
 
 class Embedder:
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
-        logger.info(f"Loading embedding model: {model_name}")
-        self.model = SentenceTransformer(model_name)
+        self.model_name = model_name
+        self._model = None  # Lazy load
+
+    @property
+    def model(self):
+        """Lazy load the model on first use to speed up app startup."""
+        if self._model is None:
+            logger.info(f"Loading embedding model: {self.model_name}")
+            self._model = SentenceTransformer(self.model_name)
+        return self._model
 
     def embed(self, texts: List[str]) -> List[List[float]]:
         """
@@ -21,3 +29,4 @@ class Embedder:
             return []
 
 embedder = Embedder()
+
