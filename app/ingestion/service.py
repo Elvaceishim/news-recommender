@@ -35,9 +35,13 @@ def ingest_feeds(feed_urls: list[str]):
         logger.info(f"Found {len(new_articles)} new articles. Generating embeddings...")
 
         # 3. Generate embeddings
-        # Batch processing might be better for large N, but for now direct is fine
         contents = [f"{a['title']} {a['content']}" for a in new_articles]
         embeddings = embedder.embed(contents)
+
+        # Validate embeddings were generated
+        if not embeddings or len(embeddings) != len(new_articles):
+            logger.error(f"Embedding generation failed: got {len(embeddings) if embeddings else 0} embeddings for {len(new_articles)} articles")
+            raise Exception("Failed to generate embeddings - check HF_API_TOKEN")
 
         # 4. Save to DB
         db_articles = []
@@ -53,7 +57,7 @@ def ingest_feeds(feed_urls: list[str]):
         
         db.add_all(db_articles)
         db.commit()
-        logger.info(f"Successfully saved {len(db_articles)} articles.")
+        logger.info(f"Successfully saved {len(db_articles)} articles with embeddings.")
 
     except Exception as e:
         logger.error(f"Ingestion failed: {e}")
