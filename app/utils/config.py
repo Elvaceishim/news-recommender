@@ -6,6 +6,9 @@ class Settings(BaseSettings):
     SUPABASE_KEY: str
     LOG_LEVEL: str = "INFO"
 
+    # Cron ingestion secret (for external cron services)
+    CRON_SECRET: str | None = None
+
     # JWT Config
     JWT_SECRET: str
     ALGORITHM: str = "HS256"

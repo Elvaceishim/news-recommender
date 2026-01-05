@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from app.api.routes import recommend, auth
+from app.api.routes import recommend, auth, ingest
 from app.utils.logger import setup_logger
 from fastapi.middleware.cors import CORSMiddleware
 import os
@@ -28,6 +28,7 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 # Include API routes
 app.include_router(recommend.router)
 app.include_router(auth.router)
+app.include_router(ingest.router)
 
 @app.get("/")
 def serve_frontend():
